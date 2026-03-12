@@ -24,7 +24,7 @@
 }
 
 .auth-header h1 {
-    font-size: 24px;
+    font-size: 64px;
     font-weight: 700;
     letter-spacing: -0.5px;
     margin-bottom: 8px;
@@ -77,6 +77,40 @@
     font-weight: 500;
     margin-bottom: 6px;
     color: var(--text-main);
+}
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 0;
+    margin-bottom: 20px;
+    transition: color 0.2s ease;
+    width: fit-content;
+}
+
+.back-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+    color: var(--text-main);
+}
+
+.back-btn:hover svg {
+    transform: translateX(-4px);
+    color: var(--accent-green);
+}
+
+.back-btn {
+  position: absolute;
+  top: 40px;
+  left: 40px;
 }
 
 .input-group input {
