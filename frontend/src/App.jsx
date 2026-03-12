@@ -2,9 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import FarmerDashboard from "./pages/FarmerDashboard";
-import BuyerMarketplace from "./pages/BuyerMarketplace";
+import BuyerMarketplace from "./pages/BuyerMarketPlace";
 import DeliveryDashboard from "./pages/DeliveryDashboard";
-
+import ProductsPage from "./pages/ProductsPage";
 function App() {
   return (
     <Routes>
@@ -13,6 +13,7 @@ function App() {
       <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
       <Route path="/buyer-marketplace" element={<BuyerMarketplace />} />
       <Route path="/delivery-dashboard" element={<DeliveryDashboard />} />
+      <Route path="/products" element={<ProductsPage />} />
     </Routes>
   );
 }
