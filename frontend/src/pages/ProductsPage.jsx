@@ -8,7 +8,7 @@ const CATEGORIES_DATA = [
         id: "cropCare",
         items: [
             { id: "fertilizers", image: "https://images.unsplash.com/photo-1505322471958-89c0fe33722e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "pesticides", image: "https://images.unsplash.com/photo-1610408542981-b55979bcdaaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
+            { id: "pesticides", image: "https://bestbeebrothers.com/cdn/shop/articles/bbb-pesticides.jpg?v=1524752687&width=2048" },
             { id: "herbicides", image: "https://images.unsplash.com/photo-1599863261644-8f7ad96e2acc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
             { id: "fungicides", image: "https://images.unsplash.com/photo-1595183916949-a29d51ccfc43?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
             { id: "soilKits", image: "https://images.unsplash.com/photo-1530836369250-ef71a3f5e481?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
