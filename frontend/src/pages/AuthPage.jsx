@@ -1,45 +1,78 @@
+import React, { useState } from "react";
 import "./auth.css";
 
 export default function AuthPage() {
-    const selectRole = (role) => {
-        console.log("Selected role:", role);
+    const [isLogin, setIsLogin] = useState(true);
+    const [role, setRole] = useState("Farmer");
+    const [isOpen, setIsOpen] = useState(false);
 
-        // later you can redirect to OTP login
-        // navigate(`/login/${role}`)
+    const roles = ["Farmer", "Buyer", "Delivery Partner"];
+
+    const handleRoleSelect = (selected) => {
+        setRole(selected);
+        setIsOpen(false);
     };
 
     return (
         <div className="auth-container">
-
             <div className="auth-box">
+                <header className="auth-header">
+                    <h1>MandiConnect</h1>
+                    <p>{isLogin ? "Welcome back" : "Create your account"}</p>
+                </header>
 
-                <h1>MandiConnect</h1>
-                <p>Select how you want to use the platform</p>
+                <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+                    <div className="input-group">
+                        <label>I am a...</label>
+                        <div className={`custom-select ${isOpen ? "open" : ""}`}>
+                            <div className="select-trigger" onClick={() => setIsOpen(!isOpen)}>
+                                <span>{role}</span>
+                                <span className="chevron">▼</span>
+                            </div>
 
-                <div className="roles">
-
-                    <div className="role-card" onClick={() => selectRole("farmer")}>
-                        <div className="role-icon">🌾</div>
-                        <h3>Farmer</h3>
-                        <p>List harvests and sell directly to retailers</p>
+                            {isOpen && (
+                                <div className="select-options">
+                                    {roles.map((r) => (
+                                        <div
+                                            key={r}
+                                            className={`option ${role === r ? "selected" : ""}`}
+                                            onClick={() => handleRoleSelect(r)}
+                                        >
+                                            {r}
+                                            {role === r && <span className="check">✓</span>}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="role-card" onClick={() => selectRole("buyer")}>
-                        <div className="role-icon">🛒</div>
-                        <h3>Buyer</h3>
-                        <p>Browse produce and place bulk orders</p>
+                    {!isLogin && (
+                        <div className="input-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="John Doe" />
+                        </div>
+                    )}
+
+                    <div className="input-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="name@example.com" />
                     </div>
 
-                    <div className="role-card" onClick={() => selectRole("delivery")}>
-                        <div className="role-icon">🚚</div>
-                        <h3>Delivery Partner</h3>
-                        <p>Transport goods between farms and retailers</p>
-                    </div>
+                    <button type="submit" className="btn-primary">
+                        {isLogin ? "Sign In" : "Get Started"}
+                    </button>
+                </form>
 
-                </div>
-
+                <footer className="auth-footer">
+                    <p>
+                        {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+                        <span onClick={() => setIsLogin(!isLogin)}>
+                            {isLogin ? "Sign up" : "Log in"}
+                        </span>
+                    </p>
+                </footer>
             </div>
-
         </div>
     );
 }
