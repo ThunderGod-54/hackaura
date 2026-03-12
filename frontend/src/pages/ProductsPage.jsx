@@ -7,46 +7,46 @@ const CATEGORIES_DATA = [
     {
         id: "cropCare",
         items: [
-            { id: "fertilizers", image: "https://images.unsplash.com/photo-1505322471958-89c0fe33722e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
+            { id: "fertilizers", image: "https://fl-i.thgim.com/public/incoming/5o3uzt/article68914150.ece/alternates/FREE_1200/Haryana%20farmer%20" },
             { id: "pesticides", image: "https://bestbeebrothers.com/cdn/shop/articles/bbb-pesticides.jpg?v=1524752687&width=2048" },
-            { id: "herbicides", image: "https://images.unsplash.com/photo-1599863261644-8f7ad96e2acc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "fungicides", image: "https://images.unsplash.com/photo-1595183916949-a29d51ccfc43?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "soilKits", image: "https://images.unsplash.com/photo-1530836369250-ef71a3f5e481?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
+            { id: "herbicides", image: "https://static.scientificamerican.com/sciam/cache/file/F6C02647-4B66-41FD-978DF41814785D05_source.jpg?w=600" },
+            { id: "fungicides", image: "https://tiimg.tistatic.com/fp/1/009/346/organic-fungicides-387.jpg" },
+            { id: "soilKits", image: "https://roestore.com/wp-content/uploads/2019/10/Soil-Test-Kit.jpg" }
         ]
     },
     {
         id: "machinery",
         items: [
-            { id: "tractors", image: "https://images.unsplash.com/photo-1592881882046-6b2a472db45e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "ploughs", image: "https://images.unsplash.com/photo-1605330366627-c81b95388c3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "cultivators", image: "https://images.unsplash.com/photo-1589708761276-87e35b71db41?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "harvesters", image: "https://images.unsplash.com/photo-1592881882046-6b2a472db45e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
+            { id: "tractors", image: "https://www.deere.co.in/assets/images/region-1/products/tractors/john-deere-e-series-cab.jpg" },
+            { id: "ploughs", image: "https://www.patelagroindustries.com/public/images/blog/jt8wc33oxWhkXesZZkoblUlxItMlZmlnGKhQMe5b.webp" },
+            { id: "cultivators", image: "https://www.rataequipment.com/hubfs/Cultivation/812/812%20FT%20MaxitTill%20Working.jpg" },
+            { id: "harvesters", image: "https://www.deere.africa/assets/images/region-4/products/harvesting/tseries-combine-r2C001197-1024x576.jpg" },
             { id: "drones", image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
         ]
     },
     {
         id: "irrigation",
         items: [
-            { id: "pipes", image: "https://images.unsplash.com/photo-1563216899-73dabc017e2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "drip", image: "https://images.unsplash.com/photo-1558451842-8c1d5d14df63?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "sprinklers", image: "https://images.unsplash.com/photo-1541018671183-42e761f0fc17?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "pumps", image: "https://images.unsplash.com/photo-1561081397-9e9000cc55bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
+            { id: "pipes", image: "https://hesupipe.com/wp-content/uploads/2025/09/irrigation-pipes.jpg" },
+            { id: "drip", image: "https://www.aquahubkenya.co.ke/wp-content/uploads/2022/11/IMG_1290-scaled-e1708613513560.jpg" },
+            { id: "sprinklers", image: "https://simmonslandscape.com/wp-content/uploads/2024/01/Automatic-Garden-Sprinkler.webp" },
+            { id: "pumps", image: "https://tomahawk-power.com/cdn/shop/articles/wide_angle.jpg?v=1623716961" }
         ]
     },
     {
         id: "storage",
         items: [
-            { id: "bags", image: "https://images.unsplash.com/photo-1605330366627-c81b95388c3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "silos", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "nets", image: "https://images.unsplash.com/photo-1589923158776-cb4485d99fd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
+            { id: "bags", image: "https://i0.wp.com/sesitechnologies.com/wp-content/uploads/2020/08/zerofly4.jpg?fit=1280%2C640&ssl=1" },
+            { id: "silos", image: "https://images.unsplash.com/photo-1556114846-f753bec8a9f5?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhaW4lMjBzaWxvfGVufDB8fDB8fHww" },
+            { id: "nets", image: "https://sunsafenets.com/wp-content/uploads/2021/08/agro-shade-net-1588923291-5417547.jpeg" }
         ]
     },
     {
         id: "livestock",
         items: [
-            { id: "feed", image: "https://images.unsplash.com/photo-1502472918451-f76150ad365b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "dairy", image: "https://images.unsplash.com/photo-1550585640-a3fc4e0d7c71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
-            { id: "handTools", image: "https://images.unsplash.com/photo-1589708761276-87e35b71db41?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" },
+            { id: "feed", image: "https://prodigyfoods.in/wp-content/uploads/2024/09/Top-10-Benefits-of-Balanced-Nutrition-in-Cattle-Feed.jpeg2_.jpg" },
+            { id: "dairy", image: "https://kimd.org/wp-content/uploads/2025/02/milk-eqp.jpg" },
+            { id: "handTools", image: "https://thumbs.dreamstime.com/b/garden-tool-display-set-up-chicago-botanical-gardens-45184352.jpg" },
             { id: "apps", image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" }
         ]
     }

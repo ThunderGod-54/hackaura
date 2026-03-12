@@ -123,10 +123,9 @@ export default function AuthPage() {
 
     return (
         <div className="auth-container">
-            <button className="back-btn" onClick={() => window.history.back()}>
+            <button className="back-btn" onClick={() => navigate('/')}>
                 ← Back
             </button>
-
             <div className="auth-box">
                 <header className="auth-header">
                     <h1>MandiConnect</h1>
