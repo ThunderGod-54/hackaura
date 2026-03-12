@@ -13,9 +13,6 @@ body{
 .landing{
   width:100%;
 }
-
-/* NAVBAR */
-
 .nav{
   display:flex;
   justify-content:space-between;

@@ -1,6 +1,10 @@
 import "./landing.css";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+
+    const navigate = useNavigate();
+
     return (
         <div className="landing">
 
@@ -14,10 +18,12 @@ export default function LandingPage() {
                     <a href="#">About</a>
                 </div>
 
-                <button className="nav-btn">Get Started</button>
+                <button className="nav-btn" onClick={() => navigate("/auth")}>
+                    Get Started
+                </button>
             </nav>
 
-            {/* HERO SECTION */}
+            {/* HERO */}
             <section className="hero">
                 <h1>
                     Direct Farm <span>to Retail</span> Marketplace
@@ -29,8 +35,7 @@ export default function LandingPage() {
                 </p>
 
                 <div className="hero-buttons">
-                    <button className="primary-btn">Start Selling</button>
-                    <button className="secondary-btn">Explore Marketplace</button>
+                               
                 </div>
             </section>
 
@@ -57,7 +62,13 @@ export default function LandingPage() {
             {/* CTA */}
             <section className="cta">
                 <h2>Empowering Farmers. Simplifying Supply Chains.</h2>
-                <button className="primary-btn">Join MandiConnect</button>
+
+                <button
+                    className="primary-btn"
+                    onClick={() => navigate("/auth")}
+                >
+                    Join MandiConnect
+                </button>
             </section>
 
             {/* FOOTER */}
