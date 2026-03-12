@@ -1,42 +1,136 @@
+/* GLOBAL RESET */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background: #ffffff;
+  color: #111;
+}
+
+/* ROOT CONTAINER */
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
   padding: 2rem;
+}
+
+/* LOGO */
+
+.logo {
+  height: 4em;
+  padding: 1em;
+  transition: 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* CARD */
+
+.card {
+  padding: 2rem;
+  border-radius: 12px;
+  background: #f7f7f7;
+}
+
+/* TEXT */
+
+.read-the-docs {
+  color: #777;
+  font-size: 14px;
+}
+
+/* BUTTONS */
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* CONTAINERS */
+
+.container {
+  width: 100%;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* FLEX UTILITIES */
+
+.flex {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.center {
+  justify-content: center;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* RESPONSIVE BREAKPOINTS */
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Tablets */
+
+@media (max-width: 900px) {
+
+  #root {
+    padding: 1.5rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .flex {
+    flex-direction: column;
   }
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  #root {
+    padding: 1rem;
   }
+
+  .logo {
+    height: 3em;
+  }
+
+  button {
+    width: 100%;
+  }
+
 }
 
-.card {
-  padding: 2em;
-}
+/* Small Mobile */
 
-.read-the-docs {
-  color: #888;
+@media (max-width: 400px) {
+
+  #root {
+    padding: 0.8rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
 }
