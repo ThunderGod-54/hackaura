@@ -5,6 +5,8 @@ import FarmerDashboard from "./pages/FarmerDashboard";
 import BuyerMarketplace from "./pages/BuyerMarketPlace";
 import DeliveryDashboard from "./pages/DeliveryDashboard";
 import ProductsPage from "./pages/ProductsPage";
+// import AI from './pages/Ai'; 
+// import Weather from './pages/Weather';
 function App() {
   return (
     <Routes>
@@ -14,6 +16,8 @@ function App() {
       <Route path="/buyer-marketplace" element={<BuyerMarketplace />} />
       <Route path="/delivery-dashboard" element={<DeliveryDashboard />} />
       <Route path="/products" element={<ProductsPage />} />
+      {/* <Route path="/ai" element={<AI />} />
+      <Route path="/weather" element={<Weather />} /> */}
     </Routes>
   );
 }

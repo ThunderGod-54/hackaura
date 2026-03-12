@@ -14,6 +14,7 @@
     font-family: 'Inter', system-ui, sans-serif;
     color: var(--text-main);
 }
+
 .products-nav {
     display: flex;
     justify-content: space-between;
@@ -78,6 +79,7 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
 }
+
 .products-header {
     text-align: center;
     padding: 80px 20px 60px;
@@ -208,6 +210,7 @@
     color: var(--text-muted);
     font-size: 0.95rem;
 }
+
 @media (max-width: 768px) {
     .products-header {
         padding: 50px 20px 40px;
