@@ -123,7 +123,9 @@ body {
     color: var(--text-main);
 }
 
-.input-group input {
+.input-group input,
+.input-group select,
+.input-group textarea {
     width: 100%;
     padding: 14px 16px;
     border-radius: 12px;
@@ -135,7 +137,9 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-.input-group input:focus {
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
     outline: none;
     border-color: var(--accent-green);
     box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
@@ -315,6 +319,7 @@ body {
         font-size: 2rem;
     }
 }
+
 .notification {
     position: fixed;
     top: 30px;

@@ -1,5 +1,3 @@
-/* GLOBAL RESET */
-
 * {
   margin: 0;
   padding: 0;
@@ -14,18 +12,12 @@ body {
   background: #ffffff;
   color: #111;
 }
-
-/* ROOT CONTAINER */
-
 #root {
   width: 100%;
   max-width: 1400px;
   margin: auto;
   padding: 2rem;
 }
-
-/* LOGO */
-
 .logo {
   height: 4em;
   padding: 1em;
@@ -36,22 +28,16 @@ body {
   transform: scale(1.05);
 }
 
-/* CARD */
-
 .card {
   padding: 2rem;
   border-radius: 12px;
   background: #f7f7f7;
 }
 
-/* TEXT */
-
 .read-the-docs {
   color: #777;
   font-size: 14px;
 }
-
-/* BUTTONS */
 
 button {
   padding: 12px 20px;
@@ -66,15 +52,11 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* CONTAINERS */
-
 .container {
   width: 100%;
   margin: auto;
   padding: 0 20px;
 }
-
-/* FLEX UTILITIES */
 
 .flex {
   display: flex;
@@ -86,11 +68,6 @@ button:hover {
   justify-content: center;
   text-align: center;
 }
-
-/* RESPONSIVE BREAKPOINTS */
-
-/* Tablets */
-
 @media (max-width: 900px) {
 
   #root {
@@ -102,9 +79,6 @@ button:hover {
   }
 
 }
-
-/* Mobile */
-
 @media (max-width: 600px) {
 
   #root {
@@ -120,9 +94,6 @@ button:hover {
   }
 
 }
-
-/* Small Mobile */
-
 @media (max-width: 400px) {
 
   #root {

@@ -9,7 +9,5 @@
 //     messagingSenderId: "413944467279",
 //     appId: "1:413944467279:web:4bb45a49e60a78a41d3f3a"
 // };
-
 // const app = initializeApp(firebaseConfig);
-
 // export const auth = getAuth(app);

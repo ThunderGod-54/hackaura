@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./auth.css";
 import { auth } from "../firebase";
-import { RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 export default function AuthPage() {
     const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(true);
@@ -10,9 +10,11 @@ export default function AuthPage() {
     const [isOpen, setIsOpen] = useState(false);
 
     const [phone, setPhone] = useState("");
-    const [otp, setOtp] = useState("");
-    const [otpSent, setOtpSent] = useState(false);
     const [notification, setNotification] = useState(null);
+    const [name, setName] = useState("");
+    const [gender, setGender] = useState("");
+    const [address, setAddress] = useState("");
+    const [aadhar, setAadhar] = useState("");
     const roles = ["Farmer", "Buyer", "Delivery Partner"];
 
     const handleRoleSelect = (selected) => {
@@ -27,77 +29,49 @@ export default function AuthPage() {
             setNotification(null);
         }, 3000);
     };
-    const setupRecaptcha = () => {
-        if (!window.recaptchaVerifier) {
-            window.recaptchaVerifier = new RecaptchaVerifier(
-                auth,
-                "recaptcha-container",
-                {
-                    size: "invisible"
-                }
-            );
-
-            window.recaptchaVerifier.render();
+    const handleLoginSuccess = (user, customRole) => {
+        showNotification("Login successful");
+        const userRole = customRole || role;
+        localStorage.setItem("role", userRole);
+        if (user) {
+            localStorage.setItem("userName", user.displayName || user.name || phone || "User");
+            localStorage.setItem("userPhoto", user.photoURL || "");
         }
+        setTimeout(() => {
+            if (userRole === "Farmer") {
+                navigate("/farmer-dashboard");
+            } else if (userRole === "Buyer") {
+                navigate("/buyer-marketplace");
+            } else if (userRole === "Delivery Partner") {
+                navigate("/delivery-dashboard");
+            } else {
+                navigate("/");
+            }
+        }, 1000);
     };
 
-    const sendOTP = async () => {
+    const handleSignIn = async () => {
         if (!phone) {
             showNotification("Please enter your phone number.", "error");
             return;
         }
 
-        let formattedPhone = phone.replace(/[^\d+]/g, "");
-        if (formattedPhone.length === 10 && !formattedPhone.startsWith("+")) {
-            formattedPhone = "+91" + formattedPhone;
-        } else if (!formattedPhone.startsWith("+")) {
-            formattedPhone = "+" + formattedPhone;
-        }
-
         try {
-            setupRecaptcha();
-            const appVerifier = window.recaptchaVerifier;
-            const confirmationResult = await signInWithPhoneNumber(auth, formattedPhone, appVerifier);
-            window.confirmationResult = confirmationResult;
-            setOtpSent(true);
-            showNotification("OTP sent successfully");
-        } catch (error) {
-            console.error("Error sending OTP:", error);
-            showNotification("Failed to send OTP", "error");
-        }
-    };
+            const response = await fetch("http://localhost:5000/api/signin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ phone })
+            });
+            const data = await response.json();
 
-    const handleLoginSuccess = (user) => {
-        showNotification("Login successful");
-        localStorage.setItem("role", role);
-        if (user) {
-            localStorage.setItem("userName", user.displayName || phone || "User");
-            localStorage.setItem("userPhoto", user.photoURL || "");
-        }
-        setTimeout(() => {
-            if (role === "Farmer") {
-                navigate("/farmer-dashboard");
-            } else if (role === "Buyer") {
-                navigate("/buyer-marketplace");
-            } else if (role === "Delivery Partner") {
-                navigate("/delivery-dashboard");
+            if (response.ok) {
+                handleLoginSuccess(data.user, data.user?.role);
+            } else {
+                showNotification(data.message || "You haven't registered so please register", "error");
             }
-        }, 1000);
-    };
-
-    const verifyOTP = async () => {
-        if (!otp) {
-            showNotification("Please enter the OTP.", "error");
-            return;
-        }
-
-        try {
-            const result = await window.confirmationResult.confirm(otp);
-            console.log(result.user);
-            handleLoginSuccess(result.user);
         } catch (error) {
-            console.error("Error verifying OTP:", error);
-            showNotification("Invalid OTP", "error");
+            console.error("Error signing in:", error);
+            showNotification("Server error. Try again later.", "error");
         }
     };
 
@@ -110,6 +84,40 @@ export default function AuthPage() {
         } catch (error) {
             console.error("Error signing in with Google:", error);
             showNotification("Failed to sign in with Google", "error");
+        }
+    };
+
+    const handleSignUp = async () => {
+        if (!phone || !name) {
+            showNotification("Please fill in required fields.", "error");
+            return;
+        }
+
+        const payload = { role, name, phone, gender, address, aadhar };
+        try {
+            const response = await fetch("http://localhost:5000/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+
+            if (response.status === 409) {
+                showNotification("Account already exists. Please Sign In.", "info");
+                setTimeout(() => setIsLogin(true), 1500);
+            } else if (response.ok) {
+                showNotification("Registration successful!");
+                localStorage.setItem("role", role);
+                localStorage.setItem("userName", name);
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
+            } else {
+                showNotification(data.message || "Registration failed", "error");
+            }
+        } catch (error) {
+            console.error(error);
+            showNotification("Server error. Try again later.", "error");
         }
     };
 
@@ -157,12 +165,48 @@ export default function AuthPage() {
                         </div>
                     </div>
 
-                    {/* NAME */}
+                    {/* REGISTRATION FIELDS */}
                     {!isLogin && (
-                        <div className="input-group">
-                            <label>Full Name</label>
-                            <input type="text" placeholder="John Doe" />
-                        </div>
+                        <>
+                            <div className="input-group">
+                                <label>{role === "Farmer" ? "Farmer's Name" : "Full Name"}</label>
+                                <input type="text" placeholder={role === "Farmer" ? "Enter your name" : "John Doe"} value={name} onChange={(e) => setName(e.target.value)} />
+                            </div>
+
+                            {role === "Farmer" && (
+                                <>
+                                    <div className="input-group">
+                                        <label>Gender</label>
+                                        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>Address</label>
+                                        <textarea
+                                            placeholder="Enter your full address"
+                                            rows="3"
+                                            style={{ resize: "vertical", fontFamily: "inherit" }}
+                                            value={address} onChange={(e) => setAddress(e.target.value)}
+                                        ></textarea>
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>Aadhar KYC</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter 12-digit Aadhar Number"
+                                            maxLength="12"
+                                            value={aadhar} onChange={(e) => setAadhar(e.target.value)}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                        </>
                     )}
 
                     {/* PHONE NUMBER */}
@@ -175,54 +219,31 @@ export default function AuthPage() {
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </div>
-                    <div id="recaptcha-container"></div>
-
-                    {/* SEND OTP / GOOGLE OR DIVIDER */}
-                    {!otpSent && (
-                        <div className="auth-btn-group">
-                            <button type="button" className="btn-primary" onClick={sendOTP} style={{ width: '100%', marginBottom: '15px' }}>
-                                Send OTP
-                            </button>
-                            <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', color: '#666', fontSize: '0.9rem' }}>
-                                <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ddd' }} />
-                                <span style={{ padding: '0 10px' }}>or</span>
-                                <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ddd' }} />
-                            </div>
-                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <button type="button" className="google-icon-btn" onClick={signInWithGoogle} title="Continue with Google" style={{ 
-                                    background: 'white', border: '1px solid #ddd', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s, box-shadow 0.2s' 
-                                }} onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)' }} onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)' }}>
-                                    <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                                        <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
-                                        <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"/>
-                                        <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"/>
-                                        <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.799 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.679 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z"/>
-                                        <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"/>
-                                        </g>
-                                    </svg>
-                                </button>
-                            </div>
+                    {/* BUTTONS / GOOGLE OR DIVIDER */}
+                    <div className="auth-btn-group">
+                        <button type="button" className="btn-primary" onClick={isLogin ? handleSignIn : handleSignUp} style={{ width: '100%', marginBottom: '15px' }}>
+                            {isLogin ? "Sign In" : "Sign Up"}
+                        </button>
+                        <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', color: '#666', fontSize: '0.9rem' }}>
+                            <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ddd' }} />
+                            <span style={{ padding: '0 10px' }}>or</span>
+                            <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ddd' }} />
                         </div>
-                    )}
-
-                    {/* OTP INPUT */}
-                    {otpSent && (
-                        <>
-                            <div className="input-group">
-                                <label>Enter OTP</label>
-                                <input
-                                    type="text"
-                                    placeholder="6 digit OTP"
-                                    value={otp}
-                                    onChange={(e) => setOtp(e.target.value)}
-                                />
-                            </div>
-
-                            <button type="button" className="btn-primary" onClick={verifyOTP}>
-                                Verify OTP
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <button type="button" className="google-icon-btn" onClick={signInWithGoogle} title="Continue with Google" style={{
+                                background: 'white', border: '1px solid #ddd', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s, box-shadow 0.2s'
+                            }} onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)' }} onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)' }}>
+                                <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
+                                        <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z" />
+                                        <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z" />
+                                        <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.799 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.679 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z" />
+                                        <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z" />
+                                    </g>
+                                </svg>
                             </button>
-                        </>
-                    )}
+                        </div>
+                    </div>
 
                 </form>
 

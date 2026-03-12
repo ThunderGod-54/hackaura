@@ -4,7 +4,6 @@
 html {
   scroll-behavior: smooth;
 }
-
 :root {
   --primary-green: #16a34a;
   --primary-dark: #15803d;
@@ -12,18 +11,15 @@ html {
   --dark-text: #1e293b;
   --light-text: #64748b;
   --bg-color: #fafaf9;
-  /* Warm off-white, earth-friendly */
   --card-bg: #ffffff;
   --sidebar-collapsed-width: 80px;
   --sidebar-expanded-width: 280px;
 }
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   background-color: var(--bg-color);
   color: var(--dark-text);
@@ -45,8 +41,6 @@ h4,
   min-height: 100vh;
   display: flex;
 }
-
-/* SIDEBAR STYLES (SIDE DOCKER) */
 .sidebar {
   position: fixed;
   top: 0;
@@ -61,7 +55,6 @@ h4,
   flex-direction: column;
   justify-content: space-between;
   transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  /* Bouncy smooth expansion */
   z-index: 1000;
   overflow: hidden;
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02);
@@ -232,15 +225,12 @@ h4,
   }
 }
 
-/* MAIN CONTENT */
 .main-content {
   margin-left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));
   display: flex;
   flex-direction: column;
 }
-
-/* HERO SECTION */
 .hero {
   flex-grow: 1;
   display: flex;
@@ -366,8 +356,6 @@ h4,
   border-color: rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
-
-/* FEATURES SECTION */
 .features-section {
   padding: 100px 20px;
   background-color: var(--card-bg);
@@ -469,8 +457,6 @@ h4,
   color: var(--light-text);
   line-height: 1.6;
 }
-
-/* CTA SECTION */
 .cta {
   padding: 100px 20px;
   background-color: var(--card-bg);
@@ -550,8 +536,6 @@ h4,
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
-
-/* FOOTER */
 .footer {
   background-color: var(--bg-color);
   padding: 60px 20px 20px;
@@ -599,8 +583,6 @@ h4,
   color: #94a3b8;
   font-size: 0.9rem;
 }
-
-/* ANIMATIONS */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -626,9 +608,6 @@ h4,
     box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
   }
 }
-
-/* RESPONSIVE DESIGN */
-/* Large Tablets / Small Laptops */
 @media (max-width: 1024px) {
   .hero h1 {
     font-size: 3.2rem;
@@ -665,7 +644,6 @@ h4,
   }
 }
 
-/* Tablets & Mobile Landscape */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -692,7 +670,6 @@ h4,
 
   .sidebar-logo {
     display: none;
-    /* Hide logo on mobile bottom bar */
   }
 
   .sidebar-links {
